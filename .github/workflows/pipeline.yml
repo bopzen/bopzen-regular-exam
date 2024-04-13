@@ -25,3 +25,25 @@ jobs:
       run: npm run test:unit
     - name: Display Softuni Username
       run: echo "bopzen"
+
+  Run_UI_Tests:
+
+    needs: Build_and_Unit_Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    - name: Install NPM Dependencies
+      run: npm install
+    - name: Install Playwright Browsers
+      run: npx playwright install
+    - name: Start Application
+      run: npm start &
+    - name: Run UI Tests
+      run: npm run test:ui
